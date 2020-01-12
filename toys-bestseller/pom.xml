@@ -12,10 +12,7 @@
     <artifactId>toys-bestseller</artifactId>
     <name>toys</name>
     <dependencies>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>chaos-monkey-spring-boot</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -51,6 +48,10 @@
             <artifactId>shared</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.ap4k</groupId>
+            <artifactId>kubernetes-spring-starter</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -59,8 +60,9 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+
             </plugin>
         </plugins>
     </build>

@@ -4,8 +4,6 @@ server:
 
 # Init Chaos Monkey for Spring Boot by profile
 spring:
-  profiles:
-    active: chaos-monkey
   application:
     name: toys-bestseller
   cloud:
@@ -13,29 +11,19 @@ spring:
       enabled: false
 
 
-# Configure Chaos Monkey - enabled = false
-chaos:
-  monkey:
-#    enabled: false
-    watcher:
-      restController: true
-      service: false
-    assaults:
-      latency-active: true
-
 # Spring Boot Actuator Endpoint Chaos Monkey for Spring Boot
 management:
   endpoint:
-    chaosmonkey:
-      enabled: true
-    restart:
-      enabled: true
     health:
       show-details: always
+    restart:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: "*"
+
+
 eureka:
   client:
     serviceUrl:

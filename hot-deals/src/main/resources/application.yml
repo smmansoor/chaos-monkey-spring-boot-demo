@@ -3,23 +3,16 @@ server:
 
 management:
   endpoint:
-    chaosmonkey:
+    health:
+      show-details: always
+    restart:
       enabled: true
   endpoints:
     web:
       exposure:
-        include: '*'
-chaos:
-  monkey:
-    enabled: false
-    watcher:
-      restController: true
-      service: false
-    assaults:
-      latency-active: false
+        include: "*"
+
 spring:
-  profiles:
-    active: chaos-monkey
   application:
     name: hot-deals
   cloud:

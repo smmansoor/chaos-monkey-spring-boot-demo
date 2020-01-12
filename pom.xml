@@ -19,14 +19,14 @@
 
     <properties>
         <!--Docker Container Image Prefix -->
-        <docker.image.prefix>ryanjbaxter</docker.image.prefix>
+        <docker.image.prefix>smmansoor</docker.image.prefix>
         <docker-maven-plugin.version>1.4.3</docker-maven-plugin.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-boot-dependencies.version>2.1.5.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud.version>Greenwich.BUILD-SNAPSHOT</spring-cloud.version>
+        <spring-boot-dependencies.version>2.1.6.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <lombok.version>1.16.20</lombok.version>
         <chaos-monkey-spring-boot.version>2.0.2</chaos-monkey-spring-boot.version>
     </properties>
@@ -49,10 +49,11 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>chaos-monkey-spring-boot</artifactId>
-                <version>${chaos-monkey-spring-boot.version}</version>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-kubernetes</artifactId>
+                <version>1.0.2.RELEASE</version>
             </dependency>
+
             <dependency>
                 <groupId>com.netflix.hystrix</groupId>
                 <artifactId>hystrix-core</artifactId>
@@ -82,6 +83,11 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>io.ap4k</groupId>
+                <artifactId>kubernetes-spring-starter</artifactId>
+                <version>0.4.4</version>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
@@ -90,7 +96,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
+    <!--<build>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -106,21 +112,33 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-    </build>
+    </build>-->
 
-    <profiles>
+    <!--<profiles>
         <profile>
-            <id>docker</id>
+            <id>docker</id>-->
             <build>
                 <pluginManagement>
                     <plugins>
                         <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>repackage</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+
+                       <!--<plugin>
                             <groupId>com.spotify</groupId>
                             <artifactId>dockerfile-maven-plugin</artifactId>
-                            <version>${docker-maven-plugin.version}</version>
+                            <version>1.4.10</version>
 
                             <configuration>
-                                <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                               <repository>${docker.image.prefix}/${project.artifactId}</repository>
                                 <buildArgs>
                                     <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                                     <SERVICE_NAME>${project.name}</SERVICE_NAME>
@@ -137,11 +155,26 @@
                                     </goals>
                                 </execution>
                             </executions>
+                        </plugin>-->
+                        <plugin>
+                            <groupId>io.fabric8</groupId>
+                            <artifactId>docker-maven-plugin</artifactId>
+                            <version>0.30.0</version>
+                            <configuration>
+                                <images>
+                                    <image>
+                                        <name>${docker.image.prefix}/${project.artifactId}:%v</name>
+                                        <build>
+                                            <contextDir>${project.basedir}</contextDir>
+                                        </build>
+                                    </image>
+                                </images>
+                            </configuration>
                         </plugin>
                     </plugins>
                 </pluginManagement>
             </build>
-        </profile>
-    </profiles>
+        <!--</profile>
+    </profiles>-->
 
 </project>

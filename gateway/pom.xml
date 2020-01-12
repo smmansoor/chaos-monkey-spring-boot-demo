@@ -46,6 +46,10 @@
             <artifactId>shared</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.ap4k</groupId>
+            <artifactId>kubernetes-spring-starter</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -62,8 +66,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+
             </plugin>
         </plugins>
     </build>

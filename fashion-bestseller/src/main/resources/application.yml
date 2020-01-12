@@ -3,23 +3,16 @@ server:
 
 management:
   endpoint:
-    chaosmonkey:
+    health:
+      show-details: always
+    restart:
       enabled: true
   endpoints:
     web:
       exposure:
         include: "*"
-chaos:
-  monkey:
-    enabled: false
-    watcher:
-      restController: true
-      service: false
-    assaults:
-      latency-active: true
+
 spring:
-  profiles:
-    active: chaos-monkey
   application:
     name: fashion-bestseller
   cloud:
@@ -28,4 +21,4 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}

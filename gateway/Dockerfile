@@ -1,14 +1,13 @@
-FROM docker-base-image
-ARG SERVICE_NAME
-ARG JAR_FILE
+FROM openjdk:8-jre-slim
 
 VOLUME /tmp
 
-COPY ${JAR_FILE} app.jar
+COPY target/${project.build.finalName}.jar app.jar
 
 ENV JAVA_OPTS="-Xmx128m -Xms64m"
-ENV SERVICE_NAME=${SERVICE_NAME}
-LABEL APP=${SERVICE_NAME}
-LABEL DOMAIN="shopping-demo"
+ENV SERVICE_NAME=${project.name}
+ENV SPRING_PROFILES_ACTIVE="kubernetes"
+LABEL APP=${project.name}
+LABEL DOMAIN="kubernetes-demo"
 
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
